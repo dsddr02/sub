@@ -79,7 +79,7 @@ async function 整理优选列表(api) {
 
 				const lines = content.split(/\r?\n/);
 				let 节点备注 = '';
-				let 测速端口 = '443';
+				let 测速端口 = '2087';
 
 				if (lines[0].split(',').length > 3) {
 					const idMatch = api[index].match(/id=([^&]*)/);
@@ -1452,4 +1452,5 @@ export default {
 		}
 	}
 };
+
 
