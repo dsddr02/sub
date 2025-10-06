@@ -1318,7 +1318,7 @@ export default {
 						}
 					}
 				}
-				if (port == "-1") port = "443";
+				if (port == "-1") port = "2087";
 
 				//console.log(address, port, addressid);
 
@@ -1452,5 +1452,6 @@ export default {
 		}
 	}
 };
+
 
 
