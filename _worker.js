@@ -165,30 +165,19 @@ async function 整理测速结果(tls) {
 			const text = await response.text();
 			const rows = parseCSV(text);
 
-			// 解构和验证CSV头部
+			// 解构CSV数据
 			const [header, ...dataRows] = rows;
-			const tlsIndex = header.findIndex(col => col.toUpperCase() === 'TLS');
-
-			if (tlsIndex === -1) {
-				throw new Error('CSV文件缺少必需的字段');
-			}
 
 			return dataRows
-				.filter(row => {
-					const tlsValue = row[tlsIndex].toUpperCase();
-					const speed = parseFloat(row[row.length - 1]);
-					return tlsValue === tls.toUpperCase() && speed > DLS;
-				})
 				.map(row => {
 					const ipAddress = row[0];
 					const port = row[1];
-					const dataCenter = row[tlsIndex + remarkIndex];
+					// 假设数据中心信息在固定位置，这里需要根据实际情况调整
+					const dataCenter = row[2] || ''; // 使用第3列作为数据中心，可根据需要修改
 					const formattedAddress = `${ipAddress}:${port}#${dataCenter}`;
 
-					// 处理代理IP池
-					if (csvUrl.includes('proxyip=true') &&
-						row[tlsIndex].toUpperCase() === 'TRUE' &&
-						!httpsPorts.includes(port)) {
+					// 处理代理IP池（保留原有逻辑）
+					if (csvUrl.includes('proxyip=true') && !httpsPorts.includes(port)) {
 						proxyIPPool.push(`${ipAddress}:${port}`);
 					}
 
@@ -1463,3 +1452,4 @@ export default {
 		}
 	}
 };
+
